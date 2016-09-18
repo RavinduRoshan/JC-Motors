@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="q1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="747be824-a861-40af-ac46-34219c3e0472">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="73"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="service_id" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+     service.`quantity` AS service_quantity,
+     service.`price` AS service_price,
+     stock.`price` AS stock_price,
+     stock.`discount` AS stock_discount,
+     stock.`quantity` AS stock_quantity,
+     part.`part_name` AS part_part_name,
+     part.`type` AS part_type,
+     part.`model` AS part_model,
+     customer.`customer_name` AS customer_customer_name,
+     customer.`address` AS customer_address,
+     customer.`contact` AS customer_contact,
+     customer.`email` AS customer_email,
+     quotation.`total` AS quotation_total,
+     quotation.`service_charge` AS quotation_service_charge,
+     quotation.`username` AS quotation_username
+FROM
+     `service` service INNER JOIN `quotation` quotation ON service.`service_id` = quotation.`service_id`
+     INNER JOIN `stock` stock ON service.`stock_id` = stock.`stock_id`
+     INNER JOIN `part` part ON stock.`part_id` = part.`part_id`
+     INNER JOIN `customer` customer ON quotation.`customer_id` = customer.`customer_id`
+WHERE
+     quotation.`service_id` = $P{service_id}]]>
+	</queryString>
+	<field name="service_quantity" class="java.lang.Integer"/>
+	<field name="service_price" class="java.math.BigDecimal"/>
+	<field name="stock_price" class="java.math.BigDecimal"/>
+	<field name="stock_discount" class="java.math.BigDecimal"/>
+	<field name="stock_quantity" class="java.lang.Integer"/>
+	<field name="part_part_name" class="java.lang.String"/>
+	<field name="part_type" class="java.lang.String"/>
+	<field name="part_model" class="java.lang.String"/>
+	<field name="customer_customer_name" class="java.lang.String"/>
+	<field name="customer_address" class="java.lang.String"/>
+	<field name="customer_contact" class="java.lang.String"/>
+	<field name="customer_email" class="java.lang.String"/>
+	<field name="quotation_total" class="java.math.BigDecimal"/>
+	<field name="quotation_service_charge" class="java.math.BigDecimal"/>
+	<field name="quotation_username" class="java.lang.String"/>
+	<variable name="customer_customer_name_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{customer_customer_name}]]></variableExpression>
+	</variable>
+	<variable name="customer_address_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{customer_address}]]></variableExpression>
+	</variable>
+	<group name="body">
+		<groupExpression><![CDATA[$F{part_part_name}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="152" y="2" width="263" height="44" uuid="d1e7307a-3557-4020-be0f-c3d9ade14c41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Bodoni MT" size="36" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[QUOTATION]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="442" y="117" width="110" height="15" uuid="374527d4-5eb7-4d94-96c1-07a24f9c783d"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="61" width="110" height="14" uuid="06013ae3-a0d0-40aa-abce-819be7895c74"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_customer_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="75" width="110" height="42" uuid="3ed7c0ff-c87a-490e-96b3-b373d8aae98d"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="394" y="61" width="48" height="14" uuid="a67d0fd2-c9a1-40ca-b45e-1934d0d284e9"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Name    :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="75" width="48" height="14" uuid="82fa62b4-bdcc-41c7-9556-b55853862aa8"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Address :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="117" width="49" height="15" uuid="e542136c-badb-4c36-b0f1-eb4bceb782ce"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Mobile   :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="41" width="100" height="20" forecolor="#666666" uuid="e69ead86-d40d-4037-8327-a11f89c316b5"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[CUSTOMER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="49" width="100" height="18" uuid="1c889d7c-6484-4663-89c7-d5a4e2933d2f"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JC Motors]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="66" width="100" height="14" uuid="008e2e10-1514-4644-8b38-33df30fe7c40"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[221/2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="92" width="100" height="14" uuid="40f923de-780f-42c2-ad98-e8e8f060ba15"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Maharagama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="79" width="100" height="14" uuid="35c290b9-543b-4c44-a420-98caf9eae3b0"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[High Level Road]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="105" width="113" height="14" uuid="630c00cc-71cf-423d-a51d-fb8be2519434"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Phone : 071-4101481]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="118" width="113" height="14" uuid="2abfd0be-7997-410a-998f-507b5becbb16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Tel       : 011-5652263]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="2" width="113" height="44" uuid="cac44082-ea75-479c-a3fa-be0aed6c1fdd"/>
+				<imageExpression><![CDATA["C:\\Users\\Ravindu\\Desktop\\login logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="2da69bbb-3951-4d4c-84e3-4cb9048f794a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="164" height="15" forecolor="#003333" uuid="7569888e-ac71-4b7e-bf60-dc08cc0fb0a5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Part Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="164" y="0" width="55" height="15" forecolor="#003333" uuid="48d08537-e50c-42f2-a2c6-0c978b4e13cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="219" y="0" width="71" height="15" forecolor="#003333" uuid="c0aecdca-e1af-4b90-b629-4592d52ce95f"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bike Model]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="290" y="0" width="45" height="15" forecolor="#003333" uuid="08d821ac-1c99-4dd8-8e07-d24919bf113d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="335" y="0" width="80" height="15" forecolor="#003333" uuid="9e20750e-e7b6-4a57-8f3f-39740b5325ca"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unit Price Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="415" y="0" width="78" height="15" forecolor="#003333" uuid="6ae1dfb5-58e9-4160-a02a-d5faf6ef1cd8"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Discount (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="493" y="0" width="60" height="15" forecolor="#003333" uuid="8d2d4fbc-d08f-4922-ae03-3ced37aaca35"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Value Rs.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="166" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="44e97761-b4f0-47da-a6a2-6e73891fe11e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="322" y="70" width="230" height="17" uuid="d4de6514-0309-4b48-a236-48f81db8e78e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Quotation prepared by: .............................................................
+
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="6" width="85" height="20" uuid="9c69213c-7cdc-4f6b-9127-1f24a644e694"/>
+				<textElement textAlignment="Right">
+					<font isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Service Charge]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="493" y="6" width="49" height="20" uuid="6bae19d3-ebf1-4990-b042-4cbd082201eb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{quotation_service_charge}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="482" y="26" width="70" height="1" uuid="d4a1aba6-309d-486b-9030-e4b963162e90"/>
+			</line>
+			<line>
+				<reportElement x="482" y="46" width="71" height="1" uuid="b56ea209-8bee-4db5-9f19-b9e4b9ed44fd"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="386" y="28" width="76" height="20" uuid="36ebddb1-45ea-434c-a8f8-a804ee15ca5b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="482" y="28" width="60" height="20" uuid="d223dda9-b647-48f3-83a3-988f2f490c8b"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quotation_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="49" width="493" height="14" uuid="28adf034-587a-46be-ab9c-4a6f3ce861d2"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Please note that the above prices can be changed.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="87" width="316" height="13" uuid="780cf757-d0aa-4c1c-9e2b-09cdc44125fc"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[To accept this quotation, sign here and return: ..................................................................]]></text>
+			</staticText>
+			<image>
+				<reportElement x="2" y="107" width="234" height="56" uuid="411535b4-1888-467c-a990-b12d2745a496"/>
+				<imageExpression><![CDATA["C:\\Users\\Ravindu\\Desktop\\main frame logo.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="105" width="555" height="1" uuid="ab3d5c58-071f-4dca-af7d-ce73674fa076"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="57" y="145" width="153" height="10" uuid="be62db60-5593-4c8c-9ad4-29c3209d3aa4"/>
+				<textElement>
+					<font fontName="Arial" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Passion. Performance. Speed.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="129" width="186" height="20" uuid="891d91a6-fe6b-4e04-9362-5217bddd292e"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Thank you for your business!]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="196a16c4-2d23-42f0-b1e9-91a8bbccb898"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#666666" uuid="24f5b4de-958f-4049-8c7d-2b84b3bf0170"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#666666" uuid="57a2b3af-7c24-43dc-8ce3-ebc159c5f3d7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#666666" uuid="d7c7bb55-e9b6-4fb9-aa20-5295239308c7"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
